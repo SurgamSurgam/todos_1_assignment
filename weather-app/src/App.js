@@ -3,7 +3,6 @@ import axios from 'axios';
 import secretKey from "./secret.json";
 import { geoFindMe } from "./geolocation.js";
 import { WeekDayForecast } from "./WeekDayForecast.js";
-import { DisplayMap } from "./DisplayMap.js";
 import { CurrentWeather } from "./CurrentWeather.js";
 
 class App extends Component {
@@ -17,36 +16,36 @@ class App extends Component {
       currentweather: [],
       weekdayweather: [],
       zoom: 11,
+      showForecast: false
     };
   }
 
-// Sets latitude & longitude from browser Geolocation API
-  findLocation = () => {
+  componentDidMount() {
+    // Sets latitude & longitude from browser Geolocation API
     geoFindMe().then(position => {
-      this.setState({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      });
-
-    });
-  };
-
-  getWeatherData = () => {
-    let { latitude, longitude } = this.state;
-    axios.get(
-      `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${secretKey.secretKey}/${latitude},${longitude}`
-    )
-    .then(response => {
-      debugger
-      this.populateState(response);
-      debugger
+      debugger;
+      axios.get(
+        `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${secretKey.secretKey}/${position.coords.latitude},${position.coords.longitude}`
+      )
+      .then(response => {
+        this.populateState(response);
+      })
+      .catch(err => {
+        console.log('error from darksky api', err);
+      })
     })
-  };
+    .catch(err => {
+      console.log('error from geolocation api', err);
+    })
+  }
 
   populateState = (response) =>{
     this.setState((state) => {
 
-      return {timezone: response.data.timezone,
+      return {
+        latitude: response.data.latitude,
+        longitude: response.data.longitude,
+        timezone: response.data.timezone,
         currentweather: [response.data.currently],
         weekdayweather: [response.data.daily],
         gotdata: true,
@@ -54,16 +53,21 @@ class App extends Component {
     });
   }
 
+  // Displays 7-Day Weather
+  toggleForecast = () => {
+    this.setState({
+      showForecast: true,
+    })
+  }
+
   render() {
     console.log(this.state);
-    console.log(secretKey.secretKey);
-    let { latitude, longitude, zoom, timezone, currentweather, gotdata, weekdayweather } = this.state;
+    let { latitude, longitude, zoom, timezone, currentweather, gotdata, weekdayweather, showForecast } = this.state;
 
     return (
       <React.Fragment>
-        <CurrentWeather latitude={latitude} longitude={longitude} timezone={timezone} currentweather={currentweather} gotdata={gotdata} findLocation={this.findLocation}/>
-        <DisplayMap latitude={latitude} longitude={longitude} zoom={zoom}/>
-        <WeekDayForecast latitude={latitude} longitude={longitude} weekdayweather={weekdayweather} gotdata={gotdata} getWeatherData={this.getWeatherData}/>
+        <CurrentWeather latitude={latitude} longitude={longitude} zoom={zoom} timezone={timezone} currentweather={currentweather} gotdata={gotdata} showForecast={showForecast} toggleForecast={this.toggleForecast}/>
+        <WeekDayForecast latitude={latitude} longitude={longitude} weekdayweather={weekdayweather} gotdata={gotdata} getWeatherData={this.getWeatherData} showForecast={showForecast} />
       </React.Fragment>
     );
   }

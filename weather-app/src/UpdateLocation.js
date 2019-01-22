@@ -1,12 +1,11 @@
-import React from 'react';
+import React from "react";
 
-export const UpdateLocation = ({latitude, longitude, findLocation}) => {
-
-  return(
+export const UpdateLocation = ({ latitude, longitude }) => {
+  return (
     <>
-      <p>Latitude is {latitude}° </p>
-      <p>Longitude is {longitude}°</p>
-      <button onClick={findLocation}>Get GPS Coordinates</button>
+      <p>
+        GPS Coordinates: Latitude {latitude}° | Longitude {longitude}°
+      </p>
     </>
-  )
-}
+  );
+};

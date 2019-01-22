@@ -1,7 +1,7 @@
 import React from 'react';
 import { ForecastLayout } from './ForecastLayout.js';
 
-export const WeekDayForecast = ({getWeatherData, latitude, longitude, timezone, currentweather, weekdayweather, gotdata}) => {
+export const WeekDayForecast = ({ weekdayweather, gotdata, showForecast }) => {
 
   let weeksummary;
   let mappedDailyWeatherData;
@@ -20,26 +20,29 @@ export const WeekDayForecast = ({getWeatherData, latitude, longitude, timezone, 
     });
 
     showTableHeader = (
-      <table>
-        <tr>
-          <th>Day</th>
-          <th>Description</th>
-          <th>High/Low</th>
-          <th>Precip</th>
-          <th>Wind</th>
-          <th>Humidity</th>
-        </tr>
-        {mappedDailyWeatherData}
+      <table style={{ width: "75%" }}>
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Description</th>
+            <th>High/Low</th>
+            <th>Precip</th>
+            <th>Wind</th>
+            <th>Humidity</th>
+          </tr>
+        </thead>
+        <tbody>
+          {mappedDailyWeatherData}
+        </tbody>
       </table>
-    )
-  }
+    );
+  };
 
 
-  if (latitude && longitude) {
+  if (showForecast) {
     return(
       <>
         <h1>This Week's Forecast</h1>
-        <button onClick={getWeatherData}> Get 5-Day Weather </button>
         <p>{weeksummary}</p>
         {showTableHeader}
       </>

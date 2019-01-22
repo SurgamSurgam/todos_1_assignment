@@ -1,15 +1,17 @@
 import React from 'react';
 import { UpdateLocation } from "./UpdateLocation.js";
+import { DisplayMap } from "./DisplayMap.js";
 // import { Icons } from "./Icons.js";
 
 export const CurrentWeather = (props) => {
-  let {latitude, longitude, timezone, currentweather, findLocation, gotdata} = props;
+  let {latitude, longitude, zoom, timezone, currentweather, gotdata, showForecast, toggleForecast} = props;
 
-  let displayUpdateLocation;
+  let displayUpdateLocation = <UpdateLocation latitude={latitude} longitude={longitude} />
   let showCurrentWeather;
+  let buttonShow7Days = <button onClick={toggleForecast}>Get 7-Day Weather Forecast</button>
 
-  if (!latitude && !longitude) {
-    displayUpdateLocation = <UpdateLocation latitude={latitude} longitude={longitude} findLocation={findLocation}/>;
+  if (showForecast) {
+    buttonShow7Days = null;
   }
 
   if (gotdata) {
@@ -27,13 +29,18 @@ export const CurrentWeather = (props) => {
     </>;
   }
 
+
+
   return(
     <>
       <h1 className='title'>DO Weather</h1>
       <div className='currentWeatherDiv'>
-        <h2>{displayUpdateLocation}</h2>
+        {displayUpdateLocation}
+        <DisplayMap latitude={latitude} longitude={longitude} zoom={zoom}/>
         {showCurrentWeather}
+        {buttonShow7Days}
       </div>
+
     </>
   )
 }
