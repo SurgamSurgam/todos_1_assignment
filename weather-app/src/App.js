@@ -23,7 +23,7 @@ class App extends Component {
   componentDidMount() {
     // Sets latitude & longitude from browser Geolocation API
     geoFindMe().then(position => {
-      debugger;
+
       axios.get(
         `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${secretKey.secretKey}/${position.coords.latitude},${position.coords.longitude}`
       )
@@ -41,7 +41,6 @@ class App extends Component {
 
   populateState = (response) =>{
     this.setState((state) => {
-
       return {
         latitude: response.data.latitude,
         longitude: response.data.longitude,
@@ -56,7 +55,7 @@ class App extends Component {
   // Displays 7-Day Weather
   toggleForecast = () => {
     this.setState({
-      showForecast: true,
+      showForecast: !this.state.showForecast,
     })
   }
 
@@ -64,12 +63,20 @@ class App extends Component {
     console.log(this.state);
     let { latitude, longitude, zoom, timezone, currentweather, gotdata, weekdayweather, showForecast } = this.state;
 
-    return (
-      <React.Fragment>
-        <CurrentWeather latitude={latitude} longitude={longitude} zoom={zoom} timezone={timezone} currentweather={currentweather} gotdata={gotdata} showForecast={showForecast} toggleForecast={this.toggleForecast}/>
-        <WeekDayForecast latitude={latitude} longitude={longitude} weekdayweather={weekdayweather} gotdata={gotdata} getWeatherData={this.getWeatherData} showForecast={showForecast} />
-      </React.Fragment>
-    );
+    if (showForecast) {
+      return(
+        <>
+          <WeekDayForecast latitude={latitude} longitude={longitude} weekdayweather={weekdayweather} gotdata={gotdata} getWeatherData={this.getWeatherData} showForecast={showForecast} toggleForecast={this.toggleForecast} />
+        </>
+      )
+    } else if (!showForecast) {
+      return (
+        <React.Fragment>
+          <CurrentWeather latitude={latitude} longitude={longitude} zoom={zoom} timezone={timezone} currentweather={currentweather} gotdata={gotdata} showForecast={showForecast} toggleForecast={this.toggleForecast}/>
+
+        </React.Fragment>
+      );
+    }
   }
 }
 

@@ -3,12 +3,10 @@ import { UpdateLocation } from "./UpdateLocation.js";
 import { DisplayMap } from "./DisplayMap.js";
 // import { Icons } from "./Icons.js";
 
-export const CurrentWeather = (props) => {
-  let {latitude, longitude, zoom, timezone, currentweather, gotdata, showForecast, toggleForecast} = props;
-
+export const CurrentWeather = ({latitude, longitude, zoom, timezone, currentweather, gotdata, showForecast, toggleForecast}) => {
   let displayUpdateLocation = <UpdateLocation latitude={latitude} longitude={longitude} />
   let showCurrentWeather;
-  let buttonShow7Days = <button onClick={toggleForecast}>Get 7-Day Weather Forecast</button>
+  let buttonShow7Days = <button onClick={toggleForecast}>Weather Forecast</button>
 
   if (showForecast) {
     buttonShow7Days = null;
@@ -19,28 +17,29 @@ export const CurrentWeather = (props) => {
 
     showCurrentWeather =
     <>
-      <h2>{date.toString()}</h2>
-      <h2>{timezone}</h2>
-      <h1>Temperature: {Math.round(currentweather[0].temperature)}°</h1>
-      <h2>Summary: {currentweather[0].summary}</h2>
-      <h3>Wind Chill: {Math.round(currentweather[0].apparentTemperature)}°</h3>
-      <h3>Humidity: {Math.round(currentweather[0].humidity)}%</h3>
-      <h3>Wind: {Math.round(currentweather[0].windSpeed)} mph</h3>
+      <p><b><i>{date.toString()}</i></b></p>
+      <p><b><i>{timezone}</i></b></p>
+      <p>Temperature: <b>{Math.round(currentweather[0].temperature)}°</b></p>
+      <p>Summary: <b>{currentweather[0].summary}</b></p>
+      <p>Wind Chill: <b>{Math.round(currentweather[0].apparentTemperature)}°</b></p>
+      <p>Humidity: <b>{Math.round((currentweather[0].humidity)*100)}%</b></p>
+      <p>Wind: <b>{Math.round(currentweather[0].windSpeed)} mph</b></p>
     </>;
   }
 
-
-
   return(
     <>
-      <h1 className='title'>DO Weather</h1>
-      <div className='currentWeatherDiv'>
-        {displayUpdateLocation}
-        <DisplayMap latitude={latitude} longitude={longitude} zoom={zoom}/>
-        {showCurrentWeather}
-        {buttonShow7Days}
+      <h1 className='title'> Weather DO</h1>
+      <div className='infoDiv'>
+        <div className='currentWeatherDiv'>
+          {showCurrentWeather}
+        </div>
+        <div className="mapDiv">
+          {displayUpdateLocation}
+          <DisplayMap latitude={latitude} longitude={longitude} zoom={zoom}/>
+        </div>
       </div>
-
+      {buttonShow7Days}
     </>
   )
 }

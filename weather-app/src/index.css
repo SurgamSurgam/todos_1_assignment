@@ -1,19 +1,114 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  display: grid;
+  height: 700px;
+  width: 1420px;
+  color: #1B4150;
+  /* background-color: #092936; */
+  font-family: 'Quattrocento', serif;
+}
+
+#root {
+  display: grid;
+  grid-template-rows: 15% 70% 15%;
+  justify-items: space-between;
+  text-align: center;
+  background-color: #EFF7FA;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 700px;
+}
+
+.title {
+  font-size: 4em;
+  align-self: flex-end;
+  font-variant: unicase;
+  font-weight: 600;
+  z-index: 1;
+  margin-bottom: 0px;
+}
+
+.infoDiv {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  justify-self: center;
+  align-self: center;
+  width: auto;
+  background-color: #EFF7FA;
+}
+
+
+.currentWeatherDiv{
+  display: grid;
+  justify-items: center;
+  width: max-content;
+  padding: 100px 200px 100px 50px;
+
+}
+
+.mapDiv{
+  display: grid;
+  justify-items: center;
+  width: max-content;
+}
+
+.mapDiv>p{
+  height: fit-content;
+  align-self: end;
+  margin-bottom: 60px;
 }
 
 .map {
- height: 45vh;
- width: 35%;
+ height: 258.75px;
+ width: 600px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+button{
+  width: 200px;
+  height: 30px;
+  justify-self: center;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  font-size: 12px;
+}
+
+button:hover {
+  transition: .7s;
+  background-color: black;
+  color: white;
+}
+.forecastDiv{
+  display: grid;
+}
+
+.forecastDiv>h1 {
+  width: max-content;
+  height: max-content;
+  justify-self: center;
+}
+
+table {
+  width: 120%;
+  justify-self: center;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 15px;
+
+}
+
+th {
+  background-color: #EEF6FB;
+  color: black;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  border-style: none;
 }

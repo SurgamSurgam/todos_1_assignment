@@ -7,11 +7,10 @@ export const ForecastLayout = props => {
       <tr>
         <td>{time}</td>
         <td>{summary}</td>
-        <td>{tempHigh}</td>
-        <td>{tempLow}</td>
-        <td>{precipitation}</td>
-        <td>{wind}</td>
-        <td>{humidity}</td>
+        <td>{tempHigh}°/{tempLow}°</td>
+        <td>{precipitation}%</td>
+        <td>{wind} mph</td>
+        <td>{humidity}%</td>
       </tr>
     </>
   );

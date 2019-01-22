@@ -4,7 +4,7 @@ export const UpdateLocation = ({ latitude, longitude }) => {
   return (
     <>
       <p>
-        GPS Coordinates: Latitude {latitude}° | Longitude {longitude}°
+        GPS <i>Coordinates: Latitude <b>{latitude}°</b> | Longitude <b>{longitude}°</b></i>
       </p>
     </>
   );

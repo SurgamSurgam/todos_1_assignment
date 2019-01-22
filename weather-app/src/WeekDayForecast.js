@@ -1,8 +1,7 @@
 import React from 'react';
 import { ForecastLayout } from './ForecastLayout.js';
 
-export const WeekDayForecast = ({ weekdayweather, gotdata, showForecast }) => {
-
+export const WeekDayForecast = ({ weekdayweather, gotdata, showForecast, toggleForecast }) => {
   let weeksummary;
   let mappedDailyWeatherData;
   let showTableHeader;
@@ -12,10 +11,10 @@ export const WeekDayForecast = ({ weekdayweather, gotdata, showForecast }) => {
 
     mappedDailyWeatherData = weekdayweather[0].data.map(day => {
       return(
-          <ForecastLayout time={new Date(day.time * 1000).toDateString()} summary={day.summary} tempHigh={day.temperatureHigh} tempLow={day.temperatureLow}
-          precipitation={day.precipProbability}
-          wind={day.windSpeed}
-          humidity={day.humidity} />
+          <ForecastLayout time={new Date(day.time * 1000).toDateString()} summary={day.summary} tempHigh={Math.round(day.temperatureHigh)} tempLow={Math.round(day.temperatureLow)}
+          precipitation={(day.precipProbability)*100}
+          wind={Math.round(day.windSpeed)}
+          humidity={Math.round((day.humidity)*100)} />
       )
     });
 
@@ -38,18 +37,19 @@ export const WeekDayForecast = ({ weekdayweather, gotdata, showForecast }) => {
     );
   };
 
+  let buttonShowCurrent = <button onClick={toggleForecast}>Current Weather</button>
 
-  if (showForecast) {
+
     return(
       <>
-        <h1>This Week's Forecast</h1>
-        <p>{weeksummary}</p>
-        {showTableHeader}
+        <div className="forecastDiv">
+          <h1>This Week's Forecast</h1>
+          <p>Summary: <i><b>{weeksummary}</b></i></p>
+          {showTableHeader}
+          <br/>
+          {buttonShowCurrent}
+        </div>
       </>
     )
-  } else {
-    return(
-      null
-    )
-  }
+
 }
